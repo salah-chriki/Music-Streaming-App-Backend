@@ -5,19 +5,18 @@ function streamAudio(url, res) {
     // yt-dlp command
     const ytdlp = spawn("yt-dlp", [
         "-f", "bestaudio", // Fetch the best audio quality
-        "--no-playlist",   // Ignore playlists
-        "-o", "-",         // Output to stdout
+        "--no-playlist",   
+        "-o", "-",         
         url
     ]);
 
     // Stream yt-dlp output to the client
     res.writeHead(200, {
-        "Content-Type": "audio/mpeg", // You can adjust this based on the audio format
+        "Content-Type": "audio/mpeg", 
     });
 
     ytdlp.stdout.pipe(res);
 
-    // Handle errors
     ytdlp.stderr.on("data", (data) => {
         console.error(`yt-dlp error: ${data}`);
     });
@@ -28,7 +27,6 @@ function streamAudio(url, res) {
     });
 }
 
-// Example Express app
 const express = require("express");
 const app = express();
 
